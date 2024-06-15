@@ -35,9 +35,13 @@ export default defineConfig({
 			scss: {
 				sourcemap: true,
 				additionalData: `
-          @import "@assets/styles/global/_setting.scss";
+            @import "@assets/styles/global/_setting.scss";
         `,
 			},
 		},
+	},
+	define: {
+		'process.env': {},
+		global: {},
 	},
 });

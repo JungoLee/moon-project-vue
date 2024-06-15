@@ -11,20 +11,7 @@
 // html 에 font-size, font-weight 등 설정 이유는
 // 1. rem 코딩을 활용하기 위해
 // 2. 다국어 활용을 위해 (lang 으로 분기 설정)
-html {
-	text-size-adjust: 100%;
-	font-size: $global-font-size;
-	font-weight: 400;
-	// -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	// -webkit-tap-highlight-color: transparent;
-	@include languages();
-}
-html,
-body {
-	overflow-y: auto;
-	overflow-x: hidden;
-	height: 100%;
-}
+
 // rem 코딩일때 화면 리사이즈에 rem 값이 자연스럽게 변하는 미디어 쿼리 분기값 (아래 사이트들 참고)
 // rem 단위를 쓰지 않으면 필요 없는 소스
 // https://css-tricks.com/using-a-mixin-to-take-the-math-out-of-responsive-font-sizes/
@@ -111,10 +98,7 @@ video {
 	margin: 0;
 	padding: 0;
 }
-body {
-	color: $global-font-color;
-	background-color: $global-background-color;
-}
+
 img {
 	border: 0;
 	border-style: none;
