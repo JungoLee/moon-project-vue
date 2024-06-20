@@ -2,7 +2,9 @@
 <template>
 	<ContainerView>
 		<HeaderLayout @triggered="onTriggered" v-if="!$route.meta.isHeader"></HeaderLayout>
-		<RouterView></RouterView>
+		<div id="container">
+			<RouterView></RouterView>
+		</div>
 		<FooterLayout v-if="!$route.meta.isFooter"></FooterLayout>
 	</ContainerView>
 </template>
@@ -26,4 +28,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#container {
+	max-width: 1280px;
+	margin: 0 auto;
+}
+</style>

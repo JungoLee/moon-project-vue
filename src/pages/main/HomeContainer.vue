@@ -42,6 +42,7 @@
 
 <script>
 import Swiper from 'swiper';
+import axios from 'axios';
 
 export default {
 	data() {
@@ -107,9 +108,18 @@ export default {
 				// 다른 슬라이드 데이터를 추가합니다.
 			],
 			swiper: null,
+			data: [],
 		};
 	},
 	mounted() {
+		let script = document.createElement('script');
+		script.src = 'https://www.gstatic.com/charts/loader.js';
+		script.onload = () => {
+			this.scriptLoaded = true;
+			this.fetchDataFromSpreadsheet();
+		};
+		document.body.appendChild(script);
+
 		const gsap = this.gsap;
 		const easing = 'back.out(1.7)';
 		const duration = 0.5;
@@ -151,6 +161,42 @@ export default {
 		},
 		slidePrev() {
 			this.swiper.slidePrev();
+		},
+		fetchDataFromSpreadsheet() {
+			let myKey = '1Rk_BNb_rXv3Qq9_logmdwcaBv-S7g0c6zH0D8Q_0Qx8'; // 스프레드시트 KEY
+			google.charts.load('current', { packages: ['corechart'] }).then(() => {
+				let query = new google.visualization.Query(
+					`http://spreadsheets.google.com/tq?key=${myKey}&pub=1`,
+				);
+				console.log(query);
+				query.send((response) => {
+					if (response.isError()) {
+						console.error(
+							'Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage(),
+						);
+						return;
+					}
+
+					let dataTable = response.getDataTable().toJSON();
+					let jsonData = JSON.parse(dataTable);
+					let cols = jsonData.cols.map((col) => col.label);
+					let rows = jsonData.rows.map((row) => {
+						let newRow;
+
+						row.c.forEach((obj, index) => {
+							if (obj == null || obj == undefined) return; //빈값이 경우 정지
+							obj[cols[index]] = 'f' in obj ? obj['f'] : obj['v'];
+							['f', 'v'].forEach((each) => delete obj[each]);
+							newRow = { ...newRow, ...obj };
+						});
+
+						return newRow;
+					});
+					console.log('??	');
+					console.log(rows);
+				});
+			});
+			console.log('??	');
 		},
 	},
 };
@@ -219,6 +265,9 @@ export default {
 		z-index: 2;
 		color: #fff;
 		margin-top: 0;
+		&::after {
+			@include rem(font-size, 24);
+		}
 	}
 	.swiper-button-next {
 		right: 0;
