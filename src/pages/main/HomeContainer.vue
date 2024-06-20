@@ -1,55 +1,49 @@
 <template>
 	<div class="content-box home-container">
 		<div class="content-text">
-			<swiper :options="swiperOptions">
-				<swiper-slide v-for="(item, index) in dataList" :key="index">
-					<a :href="item.href" class="frame-box" target="_blank">
-						<img :src="item.image" alt="" />
-					</a>
-					<div class="information-box">
-						<p class="option-title text-scale active font-os">
-							<span
-								class="option-title text-scale active font-os"
-								v-for="(word, index) in item.title.split('')"
-								:key="`title-${index}`"
-							>
-								{{ word }}
-							</span>
-						</p>
-						<p class="option-sub">
-							<span v-for="(subItem, subIndex) in item.sub" :key="`sub-${subIndex}`">
-								{{ subItem }}
-							</span>
-						</p>
-						<p class="desc-sup">옵션</p>
-						<p class="option-sub flex">
-							<span
-								class="badge"
-								v-for="(optionValue, optionKey) in item.option"
-								:key="`option-${optionKey}`"
-							>
-								{{ optionValue }}
-							</span>
-						</p>
-						<p class="option-price">{{ item.price }}</p>
+			<div class="swiper-container swiper-portpolio-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" v-for="(item, index) in dataList" :key="index">
+						<a :href="item.href" class="frame-box" target="_blank">
+							<img :src="item.image" alt="" />
+						</a>
+						<div class="information-box">
+							<p class="option-title text-scale font-os">
+								<span v-for="(word, index) in item.title.split('')" :key="`title-${index}`">
+									{{ word }}
+								</span>
+							</p>
+							<p class="option-sub">
+								<span v-for="(subItem, subIndex) in item.sub" :key="`sub-${subIndex}`">
+									{{ subItem }}
+								</span>
+							</p>
+							<p class="desc-sup">옵션</p>
+							<p class="option-sub flex">
+								<span
+									class="badge"
+									v-for="(optionValue, optionKey) in item.option"
+									:key="`option-${optionKey}`"
+								>
+									{{ optionValue }}
+								</span>
+							</p>
+
+							<p class="option-price">{{ item.price }}</p>
+						</div>
 					</div>
-				</swiper-slide>
-				<div class="swiper-button-next" @click="onEvent" @slot="button - next"></div>
-				<div class="swiper-button-prev" @slot="button - prev"></div>
-			</swiper>
+				</div>
+				<button type="button" @click="slideNext" class="swiper-button-next"></button>
+				<button type="button" @click="slidePrev" class="swiper-button-prev"></button>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/swiper-bundle.css';
+import Swiper from 'swiper';
 
 export default {
-	components: {
-		Swiper,
-		SwiperSlide,
-	},
 	data() {
 		return {
 			dataList: [
@@ -112,26 +106,51 @@ export default {
 				},
 				// 다른 슬라이드 데이터를 추가합니다.
 			],
-			swiperOptions: {
-				loop: true,
-				spaceBetween: 24,
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev',
-				},
-			},
+			swiper: null,
 		};
 	},
 	mounted() {
+		const gsap = this.gsap;
+		const easing = 'back.out(1.7)';
+		const duration = 0.5;
 		this.$nextTick(() => {
-			const textScale = document.querySelector('.swiper-slide-active');
-			textScale.classList.add('active');
+			this.swiper = new Swiper('.swiper-portpolio-container', {
+				loop: true,
+				spaceBetween: 24,
+				navigation: {
+					nextEl: '.swiper-portpolio-container .swiper-button-next',
+					prevEl: '.swiper-portpolio-container .swiper-button-prev',
+				},
+			});
+
+			gsap.to('.swiper-slide-active .option-title span', duration, {
+				y: 0,
+				stagger: 0.05,
+				overwrite: true,
+				ease: easing,
+			});
+
+			this.swiper.on('slideChangeTransitionEnd', function () {
+				gsap.to('.swiper-slide .option-title span', duration, {
+					y: '100%',
+					overwrite: true,
+					ease: easing,
+				});
+				gsap.to('.swiper-slide-active .option-title span', duration, {
+					y: 0,
+					stagger: 0.05,
+					overwrite: true,
+					ease: easing,
+				});
+			});
 		});
-		// this.gsap.to(this.$el, { duration: 1, x: 100 });
 	},
 	methods: {
-		onEvent() {
-			console.log('??');
+		slideNext() {
+			this.swiper.slideNext();
+		},
+		slidePrev() {
+			this.swiper.slidePrev();
 		},
 	},
 };
