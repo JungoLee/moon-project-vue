@@ -1,24 +1,46 @@
 <template>
 	<header class="uid-header">
-		<a href="#none" class="logo-uxgroup">
+		<router-link to="/" class="logo-uxgroup">
 			<img :src="logo" alt="Logo" />
-		</a>
+		</router-link>
 		<ul class="utillity-menu">
 			<li>
-				<button class="tab-btn" type="button">HOME</button>
+				<router-link to="/" class="tab-btn font-os" active-class="on">HOME</router-link>
 			</li>
 			<li>
-				<button class="tab-btn" type="button">ABOUT</button>
+				<router-link to="/about" class="tab-btn font-os" active-class="on">ABOUT</router-link>
 			</li>
 			<li>
-				<button class="tab-btn" type="button">WORK</button>
+				<router-link to="/work" class="tab-btn font-os" active-class="on">WORK</router-link>
 			</li>
 		</ul>
 	</header>
 </template>
 
-<script setup>
+<script>
 import logo from '@/assets/images/logo.png';
+
+export default {
+	data() {
+		return {
+			index: 1,
+			logo: logo,
+		};
+	},
+	methods: {
+		setIndex(i) {
+			this.index = i;
+			console.log(this.index);
+		},
+		triggerFunction() {
+			this.$emit('triggered', true);
+		},
+	},
+	created() {
+		this.triggerFunction();
+		this.$root.index = this.index;
+	},
+};
 </script>
 
 <style lang="scss" scoped>

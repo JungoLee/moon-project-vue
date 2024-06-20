@@ -19,11 +19,9 @@ $global-font-family: (
 	// 'en': (Helvetica, Arial, sans-serif),
 	'ko':
 		(
-			'Oswald',
+			'Pretendard Variable',
 			sans-serif,
 			'PT Sans',
-			sans-serif,
-			'Pretendard Variable',
 			Pretendard,
 			-apple-system,
 			BlinkMacSystemFont,
@@ -898,7 +896,7 @@ $unit-base-font-size: $global-font-size;
 			pct: 0%,
 			percent: 0%,
 			num: 0,
-			number: 0 // percent or number,,,,
+			number: 0 // percent or number,,,,,,,,
 		),
 		$unit
 	);

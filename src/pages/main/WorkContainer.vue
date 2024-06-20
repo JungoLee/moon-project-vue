@@ -23,7 +23,7 @@
 							<p>
 								<span class="options"> 로고 삽입 </span>
 								<span class="options"> 4K </span>
-								<span class="options"> 색 보정 </span>
+								<span class="options"> 색 보정 </span>H
 								<span class="options"> 촬영시간 : 60 분 ~ </span>
 								<span class="options"> 러닝타임 : 240 초 </span>
 								<span class="options"> 작업일 : ~ 5 일 </span>
@@ -175,28 +175,32 @@
 	</div>
 </template>
 
-<script setup>
+<script>
 import Swiper from 'swiper';
 
-new Swiper('.swiper-portpolio-container', {
-	loop: true,
-	navigation: {
-		nextEl: '.swiper-button-next',
-		prevEl: '.swiper-button-prev',
+export default {
+	mounted() {
+		new Swiper('.swiper-portpolio-container', {
+			loop: true,
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+		});
+
+		const textScale = document.querySelectorAll('.text-scale');
+
+		textScale.forEach((item) => {
+			item.classList.add('active');
+		});
+
+		setTimeout(() => {
+			textScale.forEach((item) => {
+				item.classList.remove('active');
+			});
+		}, 3000);
 	},
-});
-
-const textScale = document.querySelectorAll('.text-scale');
-
-textScale.forEach((item) => {
-	item.classList.add('active');
-});
-
-setTimeout(() => {
-	textScale.forEach((item) => {
-		item.classList.remove('active');
-	});
-}, 3000);
+};
 </script>
 
 <style lang="scss" scoped>

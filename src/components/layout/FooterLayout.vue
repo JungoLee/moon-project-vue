@@ -1,5 +1,5 @@
 <template>
-	<footer class="uid-footer">
+	<footer class="uid-footer font-os">
 		<small class="copyright">
 			©
 			<time class="time ui-copyright">2024</time>
