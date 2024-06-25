@@ -2,7 +2,7 @@
 	<div class="content-box work-container">
 		<div class="content-text">
 			<div class="category-box">
-				<button type="button" class="category-title">
+				<button type="button" class="category-title font-os">
 					STANDARD - <span class="small">100,000won</span>
 				</button>
 				<div class="work-detail-area">
@@ -166,10 +166,10 @@
 				</div>
 			</div>
 			<div class="category-box">
-				<button type="button" class="category-title">DELUXE</button>
+				<button type="button" class="category-title font-os">DELUXE</button>
 			</div>
 			<div class="category-box">
-				<button type="button" class="category-title">PREMIUM</button>
+				<button type="button" class="category-title font-os">PREMIUM</button>
 			</div>
 		</div>
 	</div>
@@ -196,6 +196,8 @@ export default {
 			}
 		}
 		.category-title {
+			text-align: left;
+			line-height: 1;
 			@include rem(font-size, 50);
 
 			.small {
