@@ -63,5 +63,6 @@ module.exports = {
 		__dirname: true,
 		$router: true,
 		google: true,
+		Swiper: true,
 	},
 };

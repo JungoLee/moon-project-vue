@@ -1,7 +1,7 @@
 <template>
 	<div class="content-box home-container">
 		<div class="content-text">
-			<div class="swiper-container swiper-portpolio-container">
+			<div class="swiper-container swiper-portpolio-container" ref="swiper">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide" v-for="(item, index) in dataList" :key="index">
 						<a :href="item.link" class="frame-box" target="_blank">
@@ -57,25 +57,38 @@ export default {
 	mixins: [spreadsheetMixin],
 	data() {
 		return {
+			inputSequence: '',
+			targetSequence: 'spreadmoon',
 			buttonHeight: 0, // 초기 버튼 높이 설정
 			dataList: [],
 			swiper: null,
+			isSwiperInit: false,
 		};
 	},
+	watch: {
+		dataList() {},
+	},
 	mounted() {
-		const gsap = this.gsap;
-		const easing = 'back.out(1.7)';
-		const duration = 0.5;
 		const scope = this;
 		scope.getDataJson((rows) => {
 			scope.dataList = rows;
+			const gsap = this.gsap;
+			const easing = 'back.out(1.7)';
+			const duration = 0.5;
 			scope.$nextTick(() => {
-				scope.swiper = new Swiper('.swiper-portpolio-container', {
+				scope.swiper = new Swiper(scope.$refs.swiper, {
+					slidesPerView: 1,
 					loop: true,
-					spaceBetween: 24,
 					navigation: {
 						nextEl: '.swiper-portpolio-container .swiper-button-next',
 						prevEl: '.swiper-portpolio-container .swiper-button-prev',
+					},
+					on: {
+						init: function () {
+							scope.isSwiperInit = true;
+							scope.adjustButtonHeight();
+							window.addEventListener('resize', scope.adjustButtonHeight); // 윈도우 크기 조정 시 높이 조정
+						},
 					},
 				});
 
@@ -86,7 +99,7 @@ export default {
 					ease: easing,
 				});
 
-				this.swiper.on('slideChangeTransitionEnd', function () {
+				scope.swiper.on('slideChangeTransitionEnd', function () {
 					gsap.to('.swiper-slide .option-title span', duration, {
 						y: '100%',
 						overwrite: true,
@@ -99,10 +112,14 @@ export default {
 						ease: easing,
 					});
 				});
-				this.adjustButtonHeight();
-				window.addEventListener('resize', this.adjustButtonHeight); // 윈도우 크기 조정 시 높이 조정
 			});
 		});
+
+		window.addEventListener('keyup', this.handleKeyup);
+	},
+	beforeUnmount() {
+		window.removeEventListener('resize', this.adjustButtonHeight); // 컴포넌트 제거 시 이벤트 리스너 제거
+		window.removeEventListener('keyup', this.handleKeyup);
 	},
 	methods: {
 		slideNext() {
@@ -115,6 +132,16 @@ export default {
 			const informationBox = document.querySelector('.frame-box'); // .information-box 요소 선택
 			if (informationBox) {
 				this.buttonHeight = informationBox.offsetHeight; // .information-box의 높이를 버튼 높이로 설정
+			}
+		},
+		handleKeyup(event) {
+			this.inputSequence += event.key;
+			if (this.inputSequence.indexOf(this.targetSequence) > 0) {
+				// 조건에 맞을 때 원하는 URL로 이동
+				window.open(
+					'https://docs.google.com/spreadsheets/d/1Rk_BNb_rXv3Qq9_logmdwcaBv-S7g0c6zH0D8Q_0Qx8/edit?gid=0#gid=0',
+				);
+				this.inputSequence = '';
 			}
 		},
 	},
@@ -156,6 +183,16 @@ export default {
 		display: block;
 		position: relative;
 		overflow: hidden;
+		@include rem(border-radius, 20);
+		&::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.5);
+		}
 		img {
 			position: absolute;
 			top: 0;

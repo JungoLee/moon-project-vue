@@ -176,30 +176,8 @@
 </template>
 
 <script>
-import Swiper from 'swiper';
-
 export default {
-	mounted() {
-		new Swiper('.swiper-portpolio-container', {
-			loop: true,
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev',
-			},
-		});
-
-		const textScale = document.querySelectorAll('.text-scale');
-
-		textScale.forEach((item) => {
-			item.classList.add('active');
-		});
-
-		setTimeout(() => {
-			textScale.forEach((item) => {
-				item.classList.remove('active');
-			});
-		}, 3000);
-	},
+	mounted() {},
 };
 </script>
 

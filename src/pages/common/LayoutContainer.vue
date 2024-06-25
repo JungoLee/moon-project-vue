@@ -3,7 +3,7 @@
 	<ContainerView>
 		<HeaderLayout v-if="!$route.meta.isHeader"></HeaderLayout>
 		<div id="container">
-			<RouterView> </RouterView>
+			<router-view></router-view>
 		</div>
 		<FooterLayout v-if="!$route.meta.isFooter"></FooterLayout>
 	</ContainerView>
