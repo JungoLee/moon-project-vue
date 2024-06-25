@@ -35,7 +35,7 @@ export default defineConfig({
 			scss: {
 				sourcemap: true,
 				additionalData: `
-            @import "@assets/styles/global/_setting.scss";
+            @import "@assets/styles/globals/_setting.scss";
         `,
 			},
 		},

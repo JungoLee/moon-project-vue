@@ -12,8 +12,8 @@ window.watch = watch;
 window.nextTick = nextTick;
 window.beforeMount = onBeforeMount;
 
-import '@assets/styles/global/font.scss';
-import '@assets/styles/global/reset.scss';
+import '@assets/styles/globals/font.scss';
+import '@assets/styles/globals/reset.scss';
 import '@assets/styles/comp/swiper.5.4.5.scss';
 
 const router = new Router([...appRoutes, ...commonRoutes]).getInstance();

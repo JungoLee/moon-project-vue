@@ -5,6 +5,21 @@
 		</router-link>
 		<ul class="utillity-menu">
 			<li>
+				<button type="button" @click="$emit('changeContent', 0)" class="tab-btn font-os">
+					HOME
+				</button>
+			</li>
+			<li>
+				<button type="button" @click="$emit('changeContent', 1)" class="tab-btn font-os">
+					ABOUT
+				</button>
+			</li>
+			<li>
+				<button type="button" @click="$emit('changeContent', 2)" class="tab-btn font-os">
+					WORK
+				</button>
+			</li>
+			<!-- <li>
 				<router-link to="/" class="tab-btn font-os" active-class="on">HOME</router-link>
 			</li>
 			<li>
@@ -12,7 +27,7 @@
 			</li>
 			<li>
 				<router-link to="/work" class="tab-btn font-os" active-class="on">WORK</router-link>
-			</li>
+			</li> -->
 		</ul>
 	</header>
 </template>
@@ -27,19 +42,7 @@ export default {
 			logo: logo,
 		};
 	},
-	methods: {
-		setIndex(i) {
-			this.index = i;
-			console.log(this.index);
-		},
-		triggerFunction() {
-			this.$emit('triggered', true);
-		},
-	},
-	created() {
-		this.triggerFunction();
-		this.$root.index = this.index;
-	},
+	methods: {},
 };
 </script>
 

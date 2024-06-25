@@ -45,7 +45,9 @@
 		font-size: $global-font-size;
 	}
 }
-
+* {
+	box-sizing: border-box;
+}
 body,
 div,
 dl,

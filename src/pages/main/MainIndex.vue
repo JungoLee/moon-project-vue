@@ -1,9 +1,9 @@
 <!-- MainIndex.vue -->
 <template>
 	<div>
-		<HomeContainer />
-		<AboutContainer />
-		<WorkContainer />
+		<HomeContainer v-show="index === 0" />
+		<AboutContainer v-show="index === 1" />
+		<WorkContainer v-show="index === 2" />
 	</div>
 </template>
 
@@ -11,7 +11,6 @@
 import HomeContainer from '@/components/pageLayout/HomeContainer.vue';
 import AboutContainer from '@/components/pageLayout/AboutContainer.vue';
 import WorkContainer from '@/components/pageLayout/WorkContainer.vue';
-
 export default {
 	components: {
 		HomeContainer,
@@ -20,19 +19,12 @@ export default {
 	},
 	data() {
 		return {
-			index: null,
+			index: 0, // 초기 index 값을 설정합니다.
 		};
 	},
-	created() {
-		this.index = this.$root.index;
-		this.onTriggered();
-	},
-	methods: {
-		onTriggered() {
-			// 여기에 원하는 함수를 실행하도록 설정합니다.
-			console.log('??');
-		},
-	},
+	created() {},
+	mounted() {},
+	methods: {},
 };
 </script>
 

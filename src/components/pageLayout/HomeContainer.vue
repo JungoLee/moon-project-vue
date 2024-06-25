@@ -32,8 +32,18 @@
 						</div>
 					</div>
 				</div>
-				<button type="button" @click="slideNext" class="swiper-button-next"></button>
-				<button type="button" @click="slidePrev" class="swiper-button-prev"></button>
+				<button
+					type="button"
+					@click="slideNext"
+					class="swiper-button-next"
+					:style="{ height: buttonHeight + 'px' }"
+				></button>
+				<button
+					type="button"
+					@click="slidePrev"
+					class="swiper-button-prev"
+					:style="{ height: buttonHeight + 'px' }"
+				></button>
 			</div>
 		</div>
 	</div>
@@ -47,6 +57,7 @@ export default {
 	mixins: [spreadsheetMixin],
 	data() {
 		return {
+			buttonHeight: 0, // 초기 버튼 높이 설정
 			dataList: [],
 			swiper: null,
 		};
@@ -58,36 +69,38 @@ export default {
 		const scope = this;
 		scope.getDataJson((rows) => {
 			scope.dataList = rows;
-		});
-		scope.$nextTick(() => {
-			scope.swiper = new Swiper('.swiper-portpolio-container', {
-				loop: true,
-				spaceBetween: 24,
-				navigation: {
-					nextEl: '.swiper-portpolio-container .swiper-button-next',
-					prevEl: '.swiper-portpolio-container .swiper-button-prev',
-				},
-			});
-
-			gsap.to('.swiper-slide-active .option-title span', duration, {
-				y: 0,
-				stagger: 0.05,
-				overwrite: true,
-				ease: easing,
-			});
-
-			this.swiper.on('slideChangeTransitionEnd', function () {
-				gsap.to('.swiper-slide .option-title span', duration, {
-					y: '100%',
-					overwrite: true,
-					ease: easing,
+			scope.$nextTick(() => {
+				scope.swiper = new Swiper('.swiper-portpolio-container', {
+					loop: true,
+					spaceBetween: 24,
+					navigation: {
+						nextEl: '.swiper-portpolio-container .swiper-button-next',
+						prevEl: '.swiper-portpolio-container .swiper-button-prev',
+					},
 				});
+
 				gsap.to('.swiper-slide-active .option-title span', duration, {
 					y: 0,
 					stagger: 0.05,
 					overwrite: true,
 					ease: easing,
 				});
+
+				this.swiper.on('slideChangeTransitionEnd', function () {
+					gsap.to('.swiper-slide .option-title span', duration, {
+						y: '100%',
+						overwrite: true,
+						ease: easing,
+					});
+					gsap.to('.swiper-slide-active .option-title span', duration, {
+						y: 0,
+						stagger: 0.05,
+						overwrite: true,
+						ease: easing,
+					});
+				});
+				this.adjustButtonHeight();
+				window.addEventListener('resize', this.adjustButtonHeight); // 윈도우 크기 조정 시 높이 조정
 			});
 		});
 	},
@@ -97,6 +110,12 @@ export default {
 		},
 		slidePrev() {
 			this.swiper.slidePrev();
+		},
+		adjustButtonHeight() {
+			const informationBox = document.querySelector('.frame-box'); // .information-box 요소 선택
+			if (informationBox) {
+				this.buttonHeight = informationBox.offsetHeight; // .information-box의 높이를 버튼 높이로 설정
+			}
 		},
 	},
 };
@@ -132,9 +151,18 @@ export default {
 		@include rem(margin-top, 12);
 	}
 	.frame-box {
-		@include rem(height, 50vh);
+		padding-top: 56%;
 		width: 100%;
 		display: block;
+		position: relative;
+		overflow: hidden;
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.information-box {
 		@include rem(padding, 0 20);
@@ -160,7 +188,7 @@ export default {
 	.swiper-button-next,
 	.swiper-button-prev {
 		@include rem(width, 50);
-		height: 57.3%;
+		height: 56%;
 		position: absolute;
 		top: 0;
 		z-index: 2;

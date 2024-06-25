@@ -1,9 +1,9 @@
 <!-- LayoutContainer.vue -->
 <template>
 	<ContainerView>
-		<HeaderLayout @triggered="onTriggered" v-if="!$route.meta.isHeader"></HeaderLayout>
+		<HeaderLayout v-if="!$route.meta.isHeader"></HeaderLayout>
 		<div id="container">
-			<RouterView></RouterView>
+			<RouterView> </RouterView>
 		</div>
 		<FooterLayout v-if="!$route.meta.isFooter"></FooterLayout>
 	</ContainerView>
@@ -20,11 +20,12 @@ export default {
 		HeaderLayout,
 		FooterLayout,
 	},
-	methods: {
-		onTriggered() {
-			this.$emit('triggered', true);
-		},
+	data() {
+		return {
+			content: 0,
+		};
 	},
+	methods: {},
 };
 </script>
 

@@ -1,4 +1,4 @@
-const HomeContainer = () => import('@/pages/main/HomeContainer.vue');
+const HomeContainer = () => import('@/pages/main/MainIndex.vue');
 const AboutContainer = () => import('@/pages/main/AboutContainer.vue');
 const WorkContainer = () => import('@/pages/main/WorkContainer.vue');
 const ComponentIndex = () => import('@/pages/pub/ComponentIndex.vue');
