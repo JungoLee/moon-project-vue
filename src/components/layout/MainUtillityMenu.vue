@@ -9,7 +9,7 @@
 				HOME
 			</button>
 		</li>
-		<li>
+		<!-- <li>
 			<button
 				type="button"
 				@click="$emit('setIndex', 1)"
@@ -26,7 +26,7 @@
 			>
 				WORK
 			</button>
-		</li>
+		</li> -->
 		<!-- <li>
 				<router-link to="/" class="tab-btn font-os" active-class="on">HOME</router-link>
 			</li>
