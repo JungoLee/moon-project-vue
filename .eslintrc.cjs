@@ -62,5 +62,7 @@ module.exports = {
 		require: true,
 		__dirname: true,
 		$router: true,
+		google: true,
+		Swiper: true,
 	},
 };
