@@ -6,6 +6,7 @@
 					<div class="swiper-slide" v-for="(item, index) in dataList" :key="index">
 						<a :href="item.link" class="frame-box" target="_blank">
 							<img :src="item.images" alt="" />
+							<i class="ico-play-btn" aria-hidden="true"></i>
 						</a>
 						<div class="information-box">
 							<p class="option-title text-scale font-os">
@@ -259,6 +260,30 @@ export default {
 
 	.split {
 		will-change: transform;
+	}
+	.ico-play-btn {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		@include rem(width, 120);
+		@include rem(height, 120);
+		@include rem(background-size, 120);
+		background-image: url(@/assets/images/ico_play_btn.png);
+	}
+}
+@media screen and (max-width: 1024px) {
+	.home-container .ico-play-btn {
+		@include rem(width, 80);
+		@include rem(height, 80);
+		@include rem(background-size, 80);
+	}
+}
+@media screen and (max-width: 500px) {
+	.home-container .ico-play-btn {
+		@include rem(width, 60);
+		@include rem(height, 60);
+		@include rem(background-size, 60);
 	}
 }
 </style>
